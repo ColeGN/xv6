@@ -1,0 +1,28 @@
+OBJS += \
+  $K/scheduler.o \
+  $K/vm_extended.o \
+  $K/tlb.o \
+  $K/trap_extended.o \
+
+UPROGS += \
+  $U/_schedtest \
+  $U/_memtest \
+  $U/_forktest \
+  $U/_stresstest \
+
+$K/scheduler.o: $K/scheduler.c $K/scheduler.h
+$K/vm_extended.o: $K/vm_extended.c $K/vm_extended.h
+$K/tlb.o: $K/tlb.c $K/tlb.h
+$K/trap_extended.o: $K/trap_extended.c
+
+$U/_schedtest: $U/schedtest.o $(ULIB)
+	$(LD) $(LDFLAGS) -T $U/user.ld -o $U/_schedtest $U/schedtest.o $(ULIB)
+
+$U/_memtest: $U/memtest.o $(ULIB)
+	$(LD) $(LDFLAGS) -T $U/user.ld -o $U/_memtest $U/memtest.o $(ULIB)
+
+$U/_forktest: $U/forktest.o $(ULIB)
+	$(LD) $(LDFLAGS) -T $U/user.ld -o $U/_forktest $U/forktest.o $(ULIB)
+
+$U/_stresstest: $U/stresstest.o $(ULIB)
+	$(LD) $(LDFLAGS) -T $U/user.ld -o $U/_stresstest $U/stresstest.o $(ULIB)
